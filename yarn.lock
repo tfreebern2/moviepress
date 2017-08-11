@@ -328,6 +328,10 @@ expand-range@^1.8.1:
   dependencies:
     fill-range "^2.1.0"
 
+express-es6-template-engine@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/express-es6-template-engine/-/express-es6-template-engine-2.0.1.tgz#6b2c29a083e1c11066d4db22a6e01584dab34cb0"
+
 express@^4.15.4:
   version "4.15.4"
   resolved "https://registry.yarnpkg.com/express/-/express-4.15.4.tgz#032e2253489cf8fce02666beca3d11ed7a2daed1"
