@@ -1,3 +1,15 @@
 <h1>
   This is the index page.
 </h1>
+<div class="movie-list">
+  ${movies.results.map((movie) => `
+    <a href="#" class="movie">
+      <img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" alt="Poster" />
+      <div class="movie-details">
+        <h3>${movie.title}</h3>
+        <p>${movie.overview}</p>
+        <div class="movie-button">Details</div>
+      </div>
+    </a>
+  `).join('')}
+</div>
