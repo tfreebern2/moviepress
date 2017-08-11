@@ -5,6 +5,7 @@ const es6Renderer = require('express-es6-template-engine');
 app.engine('html', es6Renderer);
 app.set('views', 'views');
 app.set('view engine', 'html');
+app.use(express.static('./assets'));
 
 app.use(require('./controllers'));
 
