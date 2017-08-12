@@ -3,7 +3,7 @@
 </h1>
 <div class="movie-list">
   ${movies.results.map((movie) => `
-    <a href="#" class="movie">
+    <a href="/movies/${movie.id}" class="movie">
       <img src="https://image.tmdb.org/t/p/w500${movie.poster_path}" alt="Poster" />
       <div class="movie-details">
         <h3>${movie.title}</h3>
