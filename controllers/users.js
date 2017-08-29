@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const models = require('../models');
 const bcrypt = require('bcryptjs');
+const auth = require('../helpers/auth.js');
 
 router
 	.get('/sign-up', (req, res) => {
@@ -15,14 +16,15 @@ router
 		models.User
 			.create(req.body, { fields: ['username', 'email', 'password'] })
 			.then(user => {
-				res.cookie('movie_press_token', user.id, {
+				const token = auth.generateToken(user);
+				res.cookie('movie_press_token', token, {
 					httpOnly: true,
 					maxAge: 86400000
 				});
 				res.redirect('/');
 			})
 			.catch(error => {
-				res.status(500);
+				return res.status(500);
 			});
 	})
 	.get('/sign-out', (req, res) => {
@@ -40,13 +42,16 @@ router
 		models.User
 			.findOne({ where: { email: req.body.email } })
 			.then(user => {
-				if (bcrypt.compareSync(req.body.password, user.password)) {
-					res.cookie('movie_press_token', user.id, {
-						httpOnly: true,
-						maxAge: 86400000
-					});
-					res.redirect('/');
-				}
+				return bcrypt.compare(req.body.password, user.password).then(match => {
+					if (match) {
+						const token = auth.generateToken(user);
+						res.cookie('movie_press_token', token, {
+							httpOnly: true,
+							maxAge: 86400000
+						});
+						res.redirect('/');
+					}
+				});
 			})
 			.catch(error => {
 				return res.status(500);
