@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const models = require('../models');
+const bcrypt = require('bcryptjs');
 
 router
 	.get('/sign-up', (req, res) => {
@@ -39,7 +40,7 @@ router
 		models.User
 			.findOne({ where: { email: req.body.email } })
 			.then(user => {
-				if (user && req.body.password === user.password) {
+				if (bcrypt.compareSync(req.body.password, user.password)) {
 					res.cookie('movie_press_token', user.id, {
 						httpOnly: true,
 						maxAge: 86400000
